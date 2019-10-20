@@ -11,10 +11,10 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: process.env.npm_package_description || '',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
    ** Customize the progress-bar color
@@ -33,20 +33,58 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/moment',
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-i18n',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  // moment config
+  i18n: {
+    locales: [
+      {
+        code: 'zh_tw',
+        iso: 'zh-TW',
+      },
+      {
+        code: 'zh_cn',
+        iso: 'zh_CN',
+      },
+      {
+        code: 'en',
+        iso: 'en-US',
+      },
+    ],
+    defaultLocale: 'zh_tw',
+    vueI18n: {
+      fallbackLocale: 'zh_tw',
+      messages: {
+        en: {
+          welcome: 'Welcome',
+        },
+        zh_tw: {
+          welcome: '歡迎',
+        },
+        zh_cn: {
+          welcome: '欢迎',
+        },
+      },
+    },
+  },
+  moment: {
+    defaultLocale: 'zh-tw',
+    locales: ['zh-tw', 'zh-hk', 'zh-cn', 'en'],
+  },
   /*
    ** Build configuration
    */
@@ -58,10 +96,10 @@ export default {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
-          enforce: "pre",
+          enforce: 'pre',
           test: /\.(js|vue)$/,
-          loader: "eslint-loader",
-          exclude: /(node_modules)/
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
         })
       }
     },
