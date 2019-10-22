@@ -23,11 +23,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['ant-design-vue/dist/antd.css'],
+  css: ['~assets/style/theme/index.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/antd-ui'],
+  plugins: ['@/plugins/element-ui'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -49,7 +49,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
-  // moment config
+  // i18n
   i18n: {
     locales: [
       {
@@ -62,7 +62,7 @@ export default {
       },
       {
         code: 'en',
-        iso: 'en-US',
+        iso: 'en-us',
       },
     ],
     defaultLocale: 'zh_tw',
@@ -81,14 +81,16 @@ export default {
       },
     },
   },
+  // moment config
   moment: {
     defaultLocale: 'zh-tw',
-    locales: ['zh-tw', 'zh-hk', 'zh-cn', 'en'],
+    locales: ['zh-tw', 'zh-hk', 'zh-cn', 'en-gb'],
   },
   /*
    ** Build configuration
    */
   build: {
+    transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */

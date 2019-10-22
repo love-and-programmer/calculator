@@ -1,7 +1,43 @@
 <template>
   <div class="container">
     <div>
-      <logo />
+      <el-container style="overflow: scroll;">
+        <el-header style="overflow: scroll; width: 100vw">
+          <div style="width: 30em; overflow-x:auto; overflow-y:none;">
+            <el-menu
+              :default-active="activeIndex"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect"
+            >
+              <el-menu-item index="1">公司及羈絆總覽</el-menu-item>
+              <el-menu-item index="2">心靈試煉 </el-menu-item>
+              <el-menu-item index="3">票房爭奪戰</el-menu-item>
+              <el-menu-item index="4">關於</el-menu-item>
+            </el-menu>
+          </div>
+        </el-header>
+        <el-main style="overflow: scroll; width: 100vw">
+          <div>
+            test
+          </div>
+          <!-- <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="公司及羈絆總覽" name="company"
+              >公司及羈絆總覽</el-tab-pane
+            >
+            <el-tab-pane label="心靈試煉" name="heart-trail"
+              >心靈試煉</el-tab-pane
+            >
+            <el-tab-pane label="票房爭奪戰" name="box-office"
+              >票房爭奪戰</el-tab-pane
+            >
+            <el-tab-pane label="關於" name="about">關於</el-tab-pane>
+          </el-tabs> -->
+        </el-main>
+        <el-footer></el-footer>
+      </el-container>
+
+      <!-- <logo />
       <h1 class="title">
         caculator
       </h1>
@@ -19,18 +55,18 @@
         >
           GitHub
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+// import Logo from '~/components/Logo.vue'
 
 export default {
-  components: {
-    Logo,
-  },
+  // components: {
+  //   Logo,
+  // },
 }
 </script>
 
@@ -39,9 +75,9 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* text-align: center; */
 }
 
 .title {

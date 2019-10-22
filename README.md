@@ -1,6 +1,6 @@
 # caculator
 
-> This is a calculator project for the game -- Love and Producer
+> This is a calculator project for the game -- Love and Producer (Traditional Chinese Server)
 > Inspired by Evol Calculator https://github.com/evolcalculator/evolcalculator.github.io
 
 - Logs
