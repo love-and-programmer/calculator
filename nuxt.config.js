@@ -23,11 +23,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['~assets/style/theme/index.css'],
+  css: ['ant-design-vue/dist/antd.css'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/antd-ui'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -90,7 +90,7 @@ export default {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    // transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
