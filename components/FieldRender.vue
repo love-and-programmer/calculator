@@ -16,6 +16,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : '',
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
         :placeholder="fieldOptions.placeholder"
@@ -43,6 +46,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : undefined,
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
         :placeholder="fieldOptions.placeholder"
@@ -65,17 +71,21 @@
       :label="fieldOptions.labelText"
     >
       <a-input-number
-        :size="fieldOptions.size ? fieldOptions.size : 'default'"
-        :min="fieldOptions.min ? fieldOptions.min : 1"
-        style="width: 100%"
         v-decorator="[
           fieldOptions.fieldName,
           {
-            initialValue: fieldOptions.defaultValue
-              ? fieldOptions.defaultValue
-              : '',
+            initialValue:
+              fieldOptions.defaultValue || fieldOptions.defaultValue === 0
+                ? fieldOptions.defaultValue
+                : '',
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
+        :size="fieldOptions.size ? fieldOptions.size : 'default'"
+        :min="fieldOptions.min ? fieldOptions.min : 0"
+        style="width: 100%"
         :placeholder="fieldOptions.placeholder"
       />
     </a-form-item>
@@ -102,6 +112,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : '',
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
       >
@@ -131,6 +144,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : null,
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
       />
@@ -153,6 +169,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : null,
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
         :placeholder="fieldOptions.placeholder"
@@ -178,6 +197,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : [],
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
         :placeholder="fieldOptions.placeholder"
@@ -207,6 +229,9 @@
             initialValue: fieldOptions.defaultValue
               ? fieldOptions.defaultValue
               : [0, 0],
+            required: fieldOptions.hasOwnProperty('required')
+              ? fieldOptions.required
+              : false,
           },
         ]"
       />

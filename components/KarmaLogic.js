@@ -14,7 +14,7 @@ const allKarmaList = [
     name: '夏日約定',
     rareness: 'SSR',
     ini: { devision: 6, creativity: 325, affinity: 295, execution: 32 },
-    evo: { devision: 123, creativity: 6097, affinity: 5336, execution: 614 },
+    evo: { devision: 123, creativity: 6097, affinity: 5536, execution: 614 },
     asc: {
       devision: 684,
       creativity: 15037,
@@ -1119,7 +1119,7 @@ const allKarmaList = [
     name: '沸騰',
     rareness: 'SSR',
     ini: { devision: 257, creativity: 286, affinity: 111, execution: 6 },
-    evo: { devision: 4816, creativity: 5356, affinity: 2069, execution: 123 },
+    evo: { devision: 4822, creativity: 5356, affinity: 2069, execution: 123 },
     asc: {
       devision: 7833,
       creativity: 12503,
@@ -1348,7 +1348,7 @@ const allKarmaList = [
     ini: { devision: 7, creativity: 66, affinity: 457, execution: 130 },
     evo: { devision: 137, creativity: 1236, affinity: 8565, execution: 2437 },
     asc: {
-      devision: 696,
+      devision: 698,
       creativity: 3432,
       affinity: 17505,
       execution: 6212,
@@ -1655,7 +1655,7 @@ const allKarmaList = [
     asc: {
       devision: 571,
       creativity: 12419,
-      affinity: 3955,
+      affinity: 3995,
       execution: 7755,
     },
   },
@@ -1799,7 +1799,7 @@ const allKarmaList = [
     name: '一步之遙',
     rareness: 'SSR',
     ini: { devision: 286, creativity: 111, affinity: 6, execution: 257 },
-    evo: { devision: 5356, creativity: 2069, affinity: 123, execution: 4816 },
+    evo: { devision: 5356, creativity: 2069, affinity: 123, execution: 4822 },
     asc: {
       devision: 12503,
       creativity: 3824,
@@ -2524,9 +2524,5 @@ const allKarmaList = [
 ]
 export default {
   name: 'KarmaLogic',
-  data() {
-    return {
-      allKarmaList: allKarmaList,
-    }
-  },
+  allKarma: allKarmaList,
 }

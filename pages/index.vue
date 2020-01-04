@@ -21,7 +21,10 @@
               <a-icon type="cluster" />
               公司基本資訊
             </span>
-            <company-karma></company-karma
+            <company-karma
+              :current-company="currentCompany"
+              @company-ability-change="companyAbilityChange"
+            ></company-karma
           ></a-tab-pane>
           <a-tab-pane key="2" forceRender>
             <span slot="tab">
@@ -41,23 +44,25 @@
       </div>
     </a-layout-content>
     <a-layout-footer :style="{ textAlign: 'center' }">
-      Love and Programmar @2019 同人計算機 數值權重為官方所有 目前以台服進度為主
+      Love and Programmar @2019 同人計算機 (數值權重為遊戲戀與製作人官方所有
+      目前以台服進度為主)
     </a-layout-footer>
   </a-layout>
 </template>
 <script>
 import ls from 'local-storage'
 import CompanyKarma from '~/components/CompanyKarma.vue'
+import KarmaLogic from '~/components/KarmaLogic.js'
 export default {
   components: {
     CompanyKarma,
   },
-  data() {
-    return {
-      currentCompany: null,
-      currentKarmaList: null,
-    }
-  },
+  // data() {
+  //   return {
+  //     currentCompany: null,
+  //     currentKarmaList: null,
+  //   }
+  // },
   asyncData(context) {
     return {
       currentCompany: ls('currentCompany'),
@@ -67,8 +72,23 @@ export default {
   mounted() {
     console.log('company', this.currentCompany)
     console.log('karma list', this.currentKarmaList)
+    console.log('karma logic', KarmaLogic.allKarma)
   },
   methods: {
+    companyAbilityChange(newValue) {
+      // save company ability and refresh ui components
+      // use name to distinguish different companies under single account
+      // TODO: support multiple companies
+      this.currentCompany =
+        ls.get('currentCompany') === null
+          ? {
+              name: '當前公司',
+              ability: newValue,
+            }
+          : { ...ls.get('currentCompany'), ability: newValue }
+      ls.set('currentCompany', this.currentCompany)
+      console.log('save currentCompany', this.currentCompany)
+    },
     callback(key) {
       console.log(key)
     },
