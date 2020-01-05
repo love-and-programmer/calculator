@@ -1,17 +1,14 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <div class="logo" />
-      <!-- <a-menu
-        theme="dark"
-        mode="horizontal"
-        :defaultSelectedKeys="['2']"
-        :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
-      </a-menu> -->
+    <a-layout-header
+      :style="{
+        position: 'fixed',
+        zIndex: 1,
+        width: '100%',
+        background: '#391085',
+      }"
+    >
+      <div class="logo"><span>Love & Programmar Evol Caculator</span></div>
     </a-layout-header>
     <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
@@ -40,11 +37,24 @@
             </span>
             敬請期待</a-tab-pane
           >
+          <a-tab-pane key="4">
+            <span slot="tab">
+              <a-icon type="info-circle" />
+              關於
+            </span>
+            作者：雅虎(雅浮) Yafufu @ GitHub<br />
+            在下是個許太<br />
+            Bug回報
+            <a
+              href="https://www.facebook.com/%E9%9B%85%E8%99%8E%E5%8F%96%E5%90%8D%E6%9C%89%E9%9A%9C%E7%A4%99-115640063174387/"
+              >臉書</a
+            >
+          </a-tab-pane>
         </a-tabs>
       </div>
     </a-layout-content>
     <a-layout-footer :style="{ textAlign: 'center' }">
-      Love and Programmar @2019 同人計算機 (數值權重為遊戲戀與製作人官方所有
+      Love and Programmar @2020 同人計算機 (數值權重為遊戲戀與製作人官方所有
       目前以台服進度為主)
     </a-layout-footer>
   </a-layout>
@@ -97,10 +107,14 @@ export default {
 </script>
 <style>
 #components-layout-demo-fixed .logo {
-  width: 120px;
+  width: 350px;
   height: 31px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px 24px 16px 0;
   float: left;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  line-height: 31px;
 }
 </style>

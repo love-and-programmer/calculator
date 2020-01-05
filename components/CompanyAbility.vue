@@ -72,7 +72,7 @@
               <slot>
                 <a-tooltip placement="bottom">
                   <template slot="title">
-                    <span>儲存到本地瀏覽器</span>
+                    <span>儲存公司能力值到本地瀏覽器</span>
                   </template>
                   <a-button
                     type="primary"

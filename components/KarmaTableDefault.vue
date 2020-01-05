@@ -1,9 +1,29 @@
 <template>
   <div class="karma-table-wrapper">
+    <a-card :bordered="false">
+      <template v-slot:title>
+        <span style="text-align:left;margin:0;">
+          {{ title }}
+        </span>
+      </template>
+      <template v-slot:extra>
+        <a-row type="flex" justify="start" align="middle">
+          <slot>
+            <a-input-search
+              allow-clear
+              :size="SearchGlobalOptions.size"
+              placeholder="搜尋羈絆名稱"
+              @change="searchKeyChangeHandler"
+            />
+          </slot>
+        </a-row>
+      </template>
+    </a-card>
     <a-table
       row-key="id"
       :columns="columns"
-      :data-source="data"
+      :data-source="getFilteredData"
+      :size="SearchGlobalOptions.size"
       bordered
       @change="handleFilter"
     >
@@ -13,11 +33,11 @@
         slot-scope="text, record"
       >
         <div :key="col">
-          <a-input
+          <a-input-number
             v-if="record.editable"
             style="margin: -5px 0"
             :value="text"
-            @change="(e) => handleChange(e.target.value, record.id, col)"
+            @change="(value) => handleChange(value, record.id, col)"
           />
           <template v-else>{{ text }}</template>
         </div>
@@ -25,40 +45,78 @@
       <template slot="operation" slot-scope="text, record">
         <div class="editable-row-operations">
           <span v-if="record.editable">
-            <a @click="() => save(record.id)">Save</a>
-            <a-popconfirm
-              title="Sure to cancel?"
-              @confirm="() => cancel(record.id)"
-            >
-              <a>Cancel</a>
+            <a @click="() => save(record.id)">儲存</a>
+            <a-divider type="vertical" />
+            <a-popconfirm title="確定取消？" @confirm="() => cancel(record.id)">
+              <a>取消</a>
             </a-popconfirm>
           </span>
           <span v-else>
-            <a @click="() => edit(record.id)">Edit</a>
+            <a @click="() => edit(record)">修改</a>
           </span>
         </div>
       </template>
     </a-table>
+    <a-modal v-model="isEditModalVisible" :title="editModalTitle" @Ok="save">
+      <template slot="footer">
+        <a-button key="back" @click="cancel">取消</a-button>
+        <a-button key="submit" type="primary" :loading="isSaving" @click="save">
+          儲存
+        </a-button>
+      </template>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
   </div>
 </template>
 <script>
+import filter from 'lodash/filter'
+import concat from 'lodash/concat'
 import KarmaLogic from './KarmaLogic'
-const data = []
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  })
-}
 export default {
+  props: {
+    title: {
+      type: String,
+      default: '羈絆列表',
+    },
+    size: {
+      //  控件的尺寸
+      type: String,
+      default: 'default',
+    },
+    responsive: {
+      type: Object,
+      default() {
+        return {
+          xxl: 6,
+          xl: 8,
+          md: 12,
+          sm: 24,
+        }
+      },
+    },
+    dataSource: {
+      type: Object,
+      default() {
+        return null
+      },
+    },
+  },
   data() {
-    this.cacheData = data.map((item) => ({ ...item }))
+    this.cacheData = KarmaLogic.allKarma.map((item) => ({ ...item }))
     return {
+      firstDrive: true,
       data: KarmaLogic.allKarma,
       sortedInfo: null,
       filteredInfo: null,
+      searchFilterKey: '',
+      isSaving: false,
+      isEditModalVisible: false,
+      editModalTitle: '',
+      currentKarma: null,
     }
   },
   computed: {
@@ -139,49 +197,101 @@ export default {
       ]
       return columnList
     },
+    SearchGlobalOptions() {
+      // 全局配置
+      return {
+        size: this.size,
+        responsive: this.responsive,
+      }
+    },
+    getFilteredData() {
+      let karmaList = null
+      if (this.dataSource === null) {
+        karmaList = KarmaLogic.allKarma
+      } else {
+        karmaList = this.dataSource.map((item) => ({ ...item }))
+        // collect exist karma id
+        const filterOutIdList = this.dataSource.reduce((pre, item) => {
+          pre.push(item.id)
+          return pre
+        }, [])
+        // prepare rest of the karma
+        const restList = filter(KarmaLogic.allKarma, function(o) {
+          return !(o.id in filterOutIdList)
+        })
+        // append to karmaList
+        karmaList = concat(karmaList, restList)
+      }
+      if (this.searchFilterKey) {
+        return karmaList.filter((item) =>
+          item.name.includes(this.searchFilterKey)
+        )
+      } else {
+        return karmaList
+      }
+      // eslint-disable-next-line
+      this.cacheData = karmaList.map((item) => ({ ...item }))
+      // eslint-disable-next-line
+      this.data = karmaList.map((item) => ({ ...item }))
+    },
   },
   methods: {
+    searchKeyChangeHandler(e) {
+      const key = e.currentTarget.value
+      console.log('search key change', key)
+      if (key) {
+        this.searchFilterKey = key.trim()
+      } else {
+        this.searchFilterKey = ''
+      }
+    },
     handleFilter(pagination, filters, sorter) {
       console.log('Various parameters', pagination, filters, sorter)
       this.filteredInfo = filters
       this.sortedInfo = sorter
     },
+    // triggered every time when input-number value change
     handleChange(value, key, column) {
       const newData = [...this.data]
-      const target = newData.filter((item) => key === item.key)[0]
+      const target = newData.filter((item) => key === item.id)[0]
       if (target) {
         target[column] = value
         this.data = newData
       }
     },
-    edit(key) {
-      const newData = [...this.data]
-      const target = newData.filter((item) => key === item.key)[0]
-      if (target) {
-        target.editable = true
-        this.data = newData
-      }
+    edit(item) {
+      this.editModalTitle = item.name
+      this.isEditModalVisible = true
+      //   const newData = [...this.data]
+      //   const target = newData.filter((item) => key === item.id)[0]
+      //   if (target) {
+      //     target.editable = true
+      //     this.data = newData
+      //   }
     },
-    save(key) {
-      const newData = [...this.data]
-      const target = newData.filter((item) => key === item.key)[0]
-      if (target) {
-        delete target.editable
-        this.data = newData
-        this.cacheData = newData.map((item) => ({ ...item }))
-      }
+    save() {
+      this.isSaving = true
+      //   this.currentKarma
+      //   const newData = [...this.data]
+      //   const target = newData.filter((item) => key === item.id)[0]
+      //   if (target) {
+      //     delete target.editable
+      //     this.data = newData
+      //     this.cacheData = newData.map((item) => ({ ...item }))
+      //   }
     },
-    cancel(key) {
-      const newData = [...this.data]
-      const target = newData.filter((item) => key === item.key)[0]
-      if (target) {
-        Object.assign(
-          target,
-          this.cacheData.filter((item) => key === item.key)[0]
-        )
-        delete target.editable
-        this.data = newData
-      }
+    cancel() {
+      this.isEditModalVisible = false
+      //   const newData = [...this.data]
+      //   const target = newData.filter((item) => key === item.id)[0]
+      //   if (target) {
+      //     Object.assign(
+      //       target,
+      //       this.cacheData.filter((item) => key === item.id)[0]
+      //     )
+      //     delete target.editable
+      //     this.data = newData
+      //   }
     },
   },
 }

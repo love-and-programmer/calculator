@@ -4,6 +4,7 @@
       :data-source="getCurrentCompanyFormItem"
       @change="abilityChange"
     ></company-ability>
+    <a-divider />
     <karma-table-default></karma-table-default>
   </div>
 </template>
