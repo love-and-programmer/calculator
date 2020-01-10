@@ -52,24 +52,11 @@
             </a-popconfirm>
           </span>
           <span v-else>
-            <a @click="() => edit(record)">修改</a>
+            <a @click="() => edit(record.id)">修改</a>
           </span>
         </div>
       </template>
     </a-table>
-    <a-modal v-model="isEditModalVisible" :title="editModalTitle" @Ok="save">
-      <template slot="footer">
-        <a-button key="back" @click="cancel">取消</a-button>
-        <a-button key="submit" type="primary" :loading="isSaving" @click="save">
-          儲存
-        </a-button>
-      </template>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-    </a-modal>
   </div>
 </template>
 <script>
@@ -114,9 +101,9 @@ export default {
       filteredInfo: null,
       searchFilterKey: '',
       isSaving: false,
-      isEditModalVisible: false,
-      editModalTitle: '',
-      currentKarma: null,
+      // isEditModalVisible: false,
+      // editModalTitle: '',
+      // currentKarma: null,
     }
   },
   computed: {
@@ -205,6 +192,7 @@ export default {
       }
     },
     getFilteredData() {
+      // dataSource -> karmaList -> this.data / this.cacheData
       let karmaList = null
       if (this.dataSource === null) {
         karmaList = KarmaLogic.allKarma
@@ -222,6 +210,7 @@ export default {
         // append to karmaList
         karmaList = concat(karmaList, restList)
       }
+      // filter with search key
       if (this.searchFilterKey) {
         return karmaList.filter((item) =>
           item.name.includes(this.searchFilterKey)
@@ -229,6 +218,7 @@ export default {
       } else {
         return karmaList
       }
+      // TODO: try to avoid trigger data change
       // eslint-disable-next-line
       this.cacheData = karmaList.map((item) => ({ ...item }))
       // eslint-disable-next-line
@@ -245,12 +235,14 @@ export default {
         this.searchFilterKey = ''
       }
     },
+    // table filter handler
     handleFilter(pagination, filters, sorter) {
       console.log('Various parameters', pagination, filters, sorter)
       this.filteredInfo = filters
       this.sortedInfo = sorter
     },
     // triggered every time when input-number value change
+    // affect to "this.data" only
     handleChange(value, key, column) {
       const newData = [...this.data]
       const target = newData.filter((item) => key === item.id)[0]
@@ -259,39 +251,43 @@ export default {
         this.data = newData
       }
     },
-    edit(item) {
-      this.editModalTitle = item.name
-      this.isEditModalVisible = true
-      //   const newData = [...this.data]
-      //   const target = newData.filter((item) => key === item.id)[0]
-      //   if (target) {
-      //     target.editable = true
-      //     this.data = newData
-      //   }
+    edit(key) {
+      // this.editModalTitle = item.name
+      // this.isEditModalVisible = true
+      // switch on edit mode
+      const newData = [...this.data]
+      const target = newData.filter((item) => key === item.id)[0]
+      if (target) {
+        target.editable = true
+        this.data = newData
+      }
     },
-    save() {
-      this.isSaving = true
-      //   this.currentKarma
-      //   const newData = [...this.data]
-      //   const target = newData.filter((item) => key === item.id)[0]
-      //   if (target) {
-      //     delete target.editable
-      //     this.data = newData
-      //     this.cacheData = newData.map((item) => ({ ...item }))
-      //   }
+    save(key) {
+      // this.isSaving = true
+      // this.currentKarma
+      // trigger event to "source-data-item-change"
+      const newData = [...this.data]
+      const target = newData.filter((item) => key === item.id)[0]
+      if (target) {
+        delete target.editable
+        this.data = newData
+        this.cacheData = newData.map((item) => ({ ...item }))
+        // trigger parent to save to local storage
+        this.$emit('source-data-item-change', target)
+      }
     },
-    cancel() {
-      this.isEditModalVisible = false
-      //   const newData = [...this.data]
-      //   const target = newData.filter((item) => key === item.id)[0]
-      //   if (target) {
-      //     Object.assign(
-      //       target,
-      //       this.cacheData.filter((item) => key === item.id)[0]
-      //     )
-      //     delete target.editable
-      //     this.data = newData
-      //   }
+    cancel(key) {
+      // this.isEditModalVisible = false
+      const newData = [...this.data]
+      const target = newData.filter((item) => key === item.id)[0]
+      if (target) {
+        Object.assign(
+          target,
+          this.cacheData.filter((item) => key === item.id)[0]
+        )
+        delete target.editable
+        this.data = newData
+      }
     },
   },
 }
