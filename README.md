@@ -1,4 +1,4 @@
-# caculator
+# Evol calculator
 
 > This is a calculator project for the game -- Love and Producer (Traditional Chinese Server)
 > Inspired by Evol Calculator https://github.com/evolcalculator/evolcalculator.github.io
@@ -8,7 +8,7 @@
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ npm run install
 
