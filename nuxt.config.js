@@ -1,3 +1,4 @@
+require('dotenv').config()
 export default {
   mode: 'spa',
   /*
@@ -15,6 +16,9 @@ export default {
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  },
+  env: {
+    baseUrl: process.env.BASE_URL || '/',
   },
   /*
    ** Customize the progress-bar color
@@ -35,6 +39,7 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     '@nuxtjs/moment',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
