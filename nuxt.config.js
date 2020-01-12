@@ -18,7 +18,7 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   env: {
-    baseUrl: process.env.BASE_URL || '/',
+    baseUrl: process.env.BASE_URL || 'calculator/',
   },
   /*
    ** Customize the progress-bar color
