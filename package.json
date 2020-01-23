@@ -1,5 +1,5 @@
 {
-  "name": "caculator",
+  "name": "evol-calculator",
   "version": "1.0.0",
   "description": "This is a calculator project for the game -- Love and Producer",
   "author": "Yafufu",
@@ -11,14 +11,20 @@
     "generate": "nuxt generate --spa",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest",
-    "format": "prettier --write '*/**/*.{js,vue}'"
+    "format": "prettier --write '*/**/*.{js,vue}'",
+    "prepareDev": "cp env/dev.env .env -f",
+    "prepareTest": "cp env/test.env .env -f",
+    "prepareProd": "cp env/prod.env .env -f",
+    "generate:test": "npm-run-all prepareTest generate prepareDev",
+    "generate:prod": "npm-run-all prepareProd generate prepareDev",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "ant-design-vue": "^1.4.10",
     "local-storage": "^2.0.0",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "nuxt": "^2.11.0",
     "nuxt-i18n": "^6.3.0",
     "sass-loader": "^8.0.0",
@@ -38,7 +44,9 @@
     "eslint-plugin-nuxt": ">=0.4.2",
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "^24.1.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^1.16.4",
+    "push-dir": "^0.4.1",
     "vue-jest": "^4.0.0-0"
   }
 }

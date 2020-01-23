@@ -12,6 +12,7 @@
             <a-input-search
               allow-clear
               :size="SearchGlobalOptions.size"
+              :style="{ width: '170px' }"
               placeholder="搜尋羈絆名稱"
               @change="searchKeyChangeHandler"
             />

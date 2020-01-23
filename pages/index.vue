@@ -10,9 +10,13 @@
     >
       <div class="logo"><span>Love & Programmar Evol Caculator</span></div>
     </a-layout-header>
-    <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
+    <a-layout-content
+      :xs="{ padding: '0' }"
+      :lg="{ padding: '0 50px' }"
+      :style="{ marginTop: '64px' }"
+    >
       <div :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        <a-tabs defaultActiveKey="1" @change="callback">
+        <a-tabs default-active-key="1" @change="callback">
           <a-tab-pane key="1">
             <span slot="tab">
               <a-icon type="cluster" />
@@ -23,7 +27,7 @@
               @company-ability-change="companyAbilityChange"
             ></company-karma
           ></a-tab-pane>
-          <a-tab-pane key="2" forceRender>
+          <a-tab-pane key="2" force-render>
             <span slot="tab">
               <a-icon type="video-camera" />
               票房

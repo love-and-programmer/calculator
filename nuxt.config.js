@@ -17,8 +17,11 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  env: {
-    baseUrl: process.env.BASE_URL || 'calculator/',
+  // env: {
+  //   baseUrl: process.env.BASE_URL || 'calculator/',
+  // },
+  router: {
+    base: process.env.BASE_URL || '/calculator/',
   },
   /*
    ** Customize the progress-bar color
@@ -55,37 +58,37 @@ export default {
    */
   axios: {},
   // i18n
-  i18n: {
-    locales: [
-      {
-        code: 'zh_tw',
-        iso: 'zh-TW',
-      },
-      {
-        code: 'zh_cn',
-        iso: 'zh_CN',
-      },
-      {
-        code: 'en',
-        iso: 'en-us',
-      },
-    ],
-    defaultLocale: 'zh_tw',
-    vueI18n: {
-      fallbackLocale: 'zh_tw',
-      messages: {
-        en: {
-          welcome: 'Welcome',
-        },
-        zh_tw: {
-          welcome: '歡迎',
-        },
-        zh_cn: {
-          welcome: '欢迎',
-        },
-      },
-    },
-  },
+  // i18n: {
+  //   locales: [
+  //     {
+  //       code: 'zh_tw',
+  //       iso: 'zh-TW',
+  //     },
+  //     {
+  //       code: 'zh_cn',
+  //       iso: 'zh_CN',
+  //     },
+  //     {
+  //       code: 'en',
+  //       iso: 'en-us',
+  //     },
+  //   ],
+  //   defaultLocale: 'zh_tw',
+  //   vueI18n: {
+  //     fallbackLocale: 'zh_tw',
+  //     messages: {
+  //       en: {
+  //         welcome: 'Welcome',
+  //       },
+  //       zh_tw: {
+  //         welcome: '歡迎',
+  //       },
+  //       zh_cn: {
+  //         welcome: '欢迎',
+  //       },
+  //     },
+  //   },
+  // },
   // moment config
   moment: {
     defaultLocale: 'zh-tw',

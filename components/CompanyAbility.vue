@@ -361,7 +361,6 @@ export default {
     .ant-form-item-control {
       height: 32px;
       line-height: 32px;
-      display: flex;
       justify-content: flex-start;
       align-items: center;
       .ant-form-item-children {
