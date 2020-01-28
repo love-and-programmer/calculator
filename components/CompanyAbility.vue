@@ -113,7 +113,7 @@
             </a-row>
           </template>
 
-          <a-row :gutter="gutter">
+          <a-row :gutter="gutter" type="flex">
             <template v-for="(item, index) in renderDataSource">
               <template v-if="item.type && item.fieldName">
                 <field-render
